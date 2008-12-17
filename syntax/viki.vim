@@ -1,9 +1,9 @@
 " viki.vim -- the viki syntax file
-" @Author:      Thomas Link (samul AT web.de)
+" @Author:      Thomas Link (micathom AT gmail com?subject=vim)
 " @License:     GPL (see http://www.gnu.org/licenses/gpl.txt)
 " @Created:     30-Dez-2003.
-" @Last Change: 2007-02-25.
-" @Revision: 0.673
+" @Last Change: 2008-08-20.
+" @Revision: 0.862
 
 if !g:vikiEnabled
     finish
@@ -17,8 +17,10 @@ endif
 
 " This command sets up buffer variables and adds some basic highlighting.
 let b:vikiEnabled = 0
-call VikiDispatchOnFamily('VikiMinorMode', '', 2)
+call viki#DispatchOnFamily('MinorMode', '', 2)
 let b:vikiEnabled = 2
+
+runtime syntax/texmath.vim
 
 " On slow machine the extended syntax highlighting can cause some major 
 " slowdown (I'm not really sure what is causing this, but it can be 
@@ -27,19 +29,17 @@ let b:vikiEnabled = 2
 "     finish
 " endif
 
-syntax sync minlines=2
-" syntax sync maxlines=50
-" syntax sync match vikiParaBreak /^\s*$/
+syn match vikiSemiParagraph /^\s\+$/
 
 syn match vikiEscape /\\/ contained containedin=vikiEscapedChar
 syn match vikiEscapedChar /\\\_./ contains=vikiEscape,vikiChar
 
 " exe 'syn match vikiAnchor /^\('. escape(b:vikiCommentStart, '\/.*^$~[]') .'\)\?[[:blank:]]*#'. b:vikiAnchorNameRx .'/'
-exe 'syn match vikiAnchor /^[[:blank:]]*%\?[[:blank:]]*#'. b:vikiAnchorNameRx .'/'
+exe 'syn match vikiAnchor /^[[:blank:]]*%\?[[:blank:]]*#'. b:vikiAnchorNameRx .'.*/'
 " syn match vikiMarkers /\(\([#?!+]\)\2\{2,2}\)/
 syn match vikiMarkers /\V\(###\|???\|!!!\|+++\)/
 " syn match vikiSymbols /\(--\|!=\|==\+\|\~\~\+\|<-\+>\|<=\+>\|<\~\+>\|<-\+\|-\+>\|<=\+\|=\+>\|<\~\+\|\~\+>\|\.\.\.\)/
-syn match vikiSymbols /\V\(--\|!=\|==\+\|~~\+\|<-\+>\|<=\+>\|<~\+>\|<-\+\|-\+>\|<=\+\|=\+>\|<~\+\|~\+>\|...\)/
+syn match vikiSymbols /\V\(--\|!=\|==\+\|~~\+\|<-\+>\|<=\+>\|<~\+>\|<-\+\|-\+>\|<=\+\|=\+>\|<~\+\|~\+>\|...\|&\(#\d\+\|\w\+\);\)/
 
 syn cluster vikiHyperLinks contains=vikiLink,vikiExtendedLink,vikiURL,vikiInexistentLink
 
@@ -60,7 +60,8 @@ endif
 syn cluster vikiText contains=@vikiTextstyles,@vikiHyperLinks,vikiMarkers
 
 " exe 'syn match vikiComment /\V\^\[[:blank:]]\*'. escape(b:vikiCommentStart, '\/') .'\.\*/ contains=@vikiText'
-syn match vikiComment /^[[:blank:]]*%.*$/ contains=@vikiText
+" syn match vikiComment /^[[:blank:]]*%.*$/ contains=@vikiText
+syn match vikiComment /^[[:blank:]]*%.*$/ contains=@vikiHyperLinks,vikiMarkers,vikiEscapedChar
 
 " syn region vikiString start=+^[[:blank:]]\+"\|"+ end=+"[.?!]\?[[:blank:]]\+$\|"+ contains=@vikiText
 " syn region vikiString start=+^"\|\s"\|[({\[]\zs"+ end=+"+ contains=@vikiText
@@ -92,6 +93,7 @@ syn match vikiPriorityListTodoE /^[[:blank:]]\+\zs#\(T: \+.\{-}E.\{-}:\|\d*E\d*\
 syn match vikiPriorityListTodoF /^[[:blank:]]\+\zs#\(T: \+.\{-}F.\{-}:\|\d*F\d*\( \+\(_\|[0-9%-]\+\)\)\?\)\( \+\[[^[].\{-}\]\)\?\ze /
 
 syn match vikiPriorityListDoneGen /^[[:blank:]]\+\zs#\(T: \+x\([0-9%-]\+\)\?.\{-}\u.\{-}:\|\(T: \+\)\?\d*\u\d* \+x[0-9%-]*\):\? .*/
+syn match vikiPriorityListDoneX /^[[:blank:]]\+\zs#X\d\?\s.*/
 syn match vikiPriorityListDoneA /^[[:blank:]]\+\zs#\(T: \+x\([0-9%-]\+\)\?.\{-}A.\{-}:\|\(T: \+\)\?\d*A\d* \+x[0-9%-]*\):\? .*/
 syn match vikiPriorityListDoneB /^[[:blank:]]\+\zs#\(T: \+x\([0-9%-]\+\)\?.\{-}B.\{-}:\|\(T: \+\)\?\d*B\d* \+x[0-9%-]*\):\? .*/
 syn match vikiPriorityListDoneC /^[[:blank:]]\+\zs#\(T: \+x\([0-9%-]\+\)\?.\{-}C.\{-}:\|\(T: \+\)\?\d*C\d* \+x[0-9%-]*\):\? .*/
@@ -100,8 +102,12 @@ syn match vikiPriorityListDoneE /^[[:blank:]]\+\zs#\(T: \+x\([0-9%-]\+\)\?.\{-}E
 syn match vikiPriorityListDoneF /^[[:blank:]]\+\zs#\(T: \+x\([0-9%-]\+\)\?.\{-}F.\{-}:\|\(T: \+\)\?\d*F\d* \+x[0-9%-]*\):\? .*/
 
 syn match vikiTableRowSep /||\?/ contained containedin=vikiTableRow,vikiTableHead
-syn region vikiTableHead start=/^[[:blank:]]*|| / skip=/\\\n/ end=/\(^\| \)||[[:blank:]]*$/ contains=ALLBUT,vikiTableRow,vikiTableHead transparent keepend
-syn region vikiTableRow  start=/^[[:blank:]]*| / skip=/\\\n/ end=/\(^\| \)|[[:blank:]]*$/ contains=ALLBUT,vikiTableRow,vikiTableHead transparent keepend
+syn region vikiTableHead start=/^[[:blank:]]*|| / skip=/\\\n/ end=/\(^\| \)||[[:blank:]]*$/
+            \ transparent keepend
+            " \ contains=ALLBUT,vikiTableRow,vikiTableHead 
+syn region vikiTableRow  start=/^[[:blank:]]*| / skip=/\\\n/ end=/\(^\| \)|[[:blank:]]*$/
+            \ transparent keepend
+            " \ contains=ALLBUT,vikiTableRow,vikiTableHead
 
 syn keyword vikiCommandNames 
             \ #CAP #CAPTION #LANG #LANGUAGE #INC #INCLUDE #DOC #VAR #KEYWORDS #OPT 
@@ -131,9 +137,6 @@ syn match vikiSkeleton /{{\_.\{-}[^\\]}}/
 syn region vikiMacro matchgroup=vikiMacroDelim start=/{\W\?[^:{}]*:\?/ end=/}/ 
             \ transparent contains=@vikiText,vikiMacroNames,vikiMacro
 
-syn match vikiCommand /^\C[[:blank:]]*#\([A-Z]\{2,}\)\>\(\\\n\|.\)*/
-            \ contains=vikiCommandNames
-
 syn region vikiRegion matchgroup=vikiMacroDelim 
             \ start=/^[[:blank:]]*#\([A-Z]\([a-z][A-Za-z]*\)\?\>\|!!!\)\(\\\n\|.\)\{-}<<\z(.*\)$/ 
             \ end=/^[[:blank:]]*\z1[[:blank:]]*$/ 
@@ -147,15 +150,42 @@ syn region vikiRegionAlt matchgroup=vikiMacroDelim
             \ end=/^[[:blank:]]*\z1\([[:blank:]].*\)\?$/ 
             \ contains=@vikiText,vikiRegionNames
 
+syn match vikiCommand /^\C[[:blank:]]*#\([A-Z]\{2,}\)\>\(\\\n\|.\)*/
+            \ contains=vikiCommandNames
 
-" if g:vikiHighlightMath == 'latex'
-"     runtime! syntax/tex.vim
-"     unlet b:current_syntax
-"     highlight clear texOption
-"     highlight clear texSpecialChar
-"     " based on syntax/tex.vim
-"     syn region vikiMathZone matchgroup=Delimiter start="\$" skip="\\\\\|\\\$" matchgroup=Delimiter end="\$" end="%stopzone\>"	contains=@texMathZoneGroup
-" endif
+syn match vikiFilesMarkers /\[\[\([^\/]\+\/\)*\|\]!\]/ contained containedin=vikiFiles
+syn match vikiFilesIndicators /{.\{-}}/ contained containedin=vikiFiles
+syn match vikiFiles /^\s*\[\[.\{-}\]!\].*$/
+            \ contained containedin=vikiFilesRegion contains=vikiFilesMarkers,vikiFilesIndicators
+syn region vikiFilesRegion matchgroup=vikiMacroDelim
+            \ start=/^[[:blank:]]*#Files\>\(\\\n\|.\)\{-}<<\z(.*\)$/ 
+            \ end=/^[[:blank:]]*\z1[[:blank:]]*$/ 
+            \ contains=vikiFiles
+
+
+if g:vikiHighlightMath == 'latex'
+    syn region vikiTexFormula matchgroup=Comment
+                \ start=/\z(\$\$\?\)/ end=/\z1/
+                \ contains=@texmathMath
+    syn sync match vikiTexFormula grouphere NONE /^\s*$/
+endif
+
+syn region vikiTexRegion matchgroup=vikiMacroDelim
+            \ start=/^[[:blank:]]*#Ltx\>\(\\\n\|.\)\{-}<<\z(.*\)$/ 
+            \ end=/^[[:blank:]]*\z1[[:blank:]]*$/ 
+            \ contains=@texmathMath
+syn region vikiTexMacro matchgroup=vikiMacroDelim
+            \ start=/{\(ltx\)\([^:{}]*:\)\?/ end=/}/ 
+            \ transparent contains=vikiMacroNames,@texmath
+syn region vikiTexMathMacro matchgroup=vikiMacroDelim
+            \ start=/{\(math\>\|\$\)\([^:{}]*:\)\?/ end=/}/ 
+            \ transparent contains=vikiMacroNames,@texmathMath
+
+
+syntax sync minlines=2
+" syntax sync maxlines=50
+" syntax sync match vikiParaBreak /^\s*$/
+" syntax sync linecont /\\$/
 
 
 " Define the default highlighting.
@@ -163,10 +193,10 @@ syn region vikiRegionAlt matchgroup=vikiMacroDelim
 " For version 5.8 and later: only when an item doesn't have highlighting yet
 if version >= 508 || !exists("did_viki_syntax_inits")
   if version < 508
-    let did_viki_syntax_inits = 1
-    command! -nargs=+ HiLink hi link <args>
+      let did_viki_syntax_inits = 1
+      command! -nargs=+ HiLink hi link <args>
   else
-    command! -nargs=+ HiLink hi def link <args>
+      command! -nargs=+ HiLink hi def link <args>
   endif
   
   if &background == "light"
@@ -188,7 +218,8 @@ if version >= 508 || !exists("did_viki_syntax_inits")
   else
       let s:twfont = ""
   endif
- 
+
+  HiLink vikiSemiParagraph NonText
   HiLink vikiEscapedChars Normal
   exe "hi vikiEscape ctermfg=". s:cm2 ."grey guifg=". s:cm2 ."grey"
   exe "hi vikiList term=bold cterm=bold gui=bold ctermfg=". s:cm1 ."Cyan guifg=". s:cm1 ."Cyan"
@@ -238,6 +269,7 @@ if version >= 508 || !exists("did_viki_syntax_inits")
   HiLink vikiPriorityListDoneE Comment
   HiLink vikiPriorityListDoneF Comment
   HiLink vikiPriorityListDoneGen Comment
+  HiLink vikiPriorityListDoneX Comment
   
   exe "hi vikiTableRowSep term=bold cterm=bold gui=bold ctermbg=". s:cm2 ."Grey guibg=". s:cm2 ."Grey"
   
@@ -267,6 +299,10 @@ if version >= 508 || !exists("did_viki_syntax_inits")
   HiLink vikiRegion Statement
   HiLink vikiRegionWEnd vikiRegion
   HiLink vikiRegionAlt vikiRegion
+  HiLink vikiFilesRegion Statement
+  HiLink vikiFiles Constant
+  HiLink vikiFilesMarkers Ignore
+  HiLink vikiFilesIndicators Special
   " HiLink vikiCommandNames Constant
   " HiLink vikiRegionNames Constant
   " HiLink vikiMacroNames Constant
@@ -274,12 +310,23 @@ if version >= 508 || !exists("did_viki_syntax_inits")
   HiLink vikiRegionNames Identifier
   HiLink vikiMacroNames Identifier
 
+  " Statement PreProc
+  HiLink vikiTexSup Type
+  HiLink vikiTexSub Type
+  " HiLink vikiTexArgDelimiters Comment
+  HiLink vikiTexCommand Statement
+  HiLink vikiTexText Normal
+  HiLink vikiTexMathFont Type
+  HiLink vikiTexMathWord Identifier
+  HiLink vikiTexUnword Constant
+  HiLink vikiTexPairs PreProc
+
   delcommand HiLink
 endif
 
 " if g:vikiMarkInexistent && !exists("b:vikiCheckInexistent")
 if g:vikiMarkInexistent
-    call VikiMarkInexistentInElement('Document')
+    call viki#MarkInexistentInitial()
 endif
 
 let b:current_syntax = 'viki'
