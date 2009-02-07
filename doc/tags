@@ -1,4 +1,5 @@
 'TailMinusF_Height'	tailminusf.txt	/*'TailMinusF_Height'*
+'Tail_Height'	tail.txt	/*'Tail_Height'*
 :CVSEdit	vcscommand.txt	/*:CVSEdit*
 :CVSEditors	vcscommand.txt	/*:CVSEditors*
 :CVSUnedit	vcscommand.txt	/*:CVSUnedit*
@@ -10,11 +11,14 @@
 :CVSWatchers	vcscommand.txt	/*:CVSWatchers*
 :MkVimball	pi_vimball.txt	/*:MkVimball*
 :RmVimball	pi_vimball.txt	/*:RmVimball*
+:STail	tail.txt	/*:STail*
 :TBrowseOutput	tlib.txt	/*:TBrowseOutput*
 :TKeyArg	tlib.txt	/*:TKeyArg*
 :TLet	tlib.txt	/*:TLet*
 :TScratch	tlib.txt	/*:TScratch*
 :TVarArg	tlib.txt	/*:TVarArg*
+:TabTail	tail.txt	/*:TabTail*
+:Tail	tail.txt	/*:Tail*
 :Tail	tailminusf.txt	/*:Tail*
 :UseVimball	pi_vimball.txt	/*:UseVimball*
 :VCSAdd	vcscommand.txt	/*:VCSAdd*
@@ -52,6 +56,7 @@
 :VikiMode	viki.txt	/*:VikiMode*
 :VikiQuote	viki.txt	/*:VikiQuote*
 :VimballList	pi_vimball.txt	/*:VimballList*
+:vim-tail.zsh	tail.txt	/*:vim-tail.zsh*
 EnhComm-Bugs	EnhancedCommentify.txt	/*EnhComm-Bugs*
 EnhComm-Credits	EnhancedCommentify.txt	/*EnhComm-Credits*
 EnhComm-EnhCommentify	EnhancedCommentify.txt	/*EnhComm-EnhCommentify*
@@ -62,6 +67,7 @@ EnhComm-Options	EnhancedCommentify.txt	/*EnhComm-Options*
 EnhComm-Support	EnhancedCommentify.txt	/*EnhComm-Support*
 EnhancedCommentify	EnhancedCommentify.txt	/*EnhancedCommentify*
 EnhancedCommentify()	EnhancedCommentify.txt	/*EnhancedCommentify()*
+Tail.txt	tail.txt	/*Tail.txt*
 TailMinusF.txt	tailminusf.txt	/*TailMinusF.txt*
 VCSCommandCVSDiffOpt	vcscommand.txt	/*VCSCommandCVSDiffOpt*
 VCSCommandCVSExec	vcscommand.txt	/*VCSCommandCVSExec*
@@ -326,6 +332,10 @@ rubysnippets-install	rubysnippets.txt	/*rubysnippets-install*
 rubysnippets-methods	rubysnippets.txt	/*rubysnippets-methods*
 rubysnippets-modules	rubysnippets.txt	/*rubysnippets-modules*
 rubysnippets.txt	rubysnippets.txt	/*rubysnippets.txt*
+tail-about	tail.txt	/*tail-about*
+tail-commands	tail.txt	/*tail-commands*
+tail-configure	tail.txt	/*tail-configure*
+tail-mappings	tail.txt	/*tail-mappings*
 tailminusf-about	tailminusf.txt	/*tailminusf-about*
 tailminusf-commands	tailminusf.txt	/*tailminusf-commands*
 tailminusf-configure	tailminusf.txt	/*tailminusf-configure*

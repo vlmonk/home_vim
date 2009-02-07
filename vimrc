@@ -30,8 +30,13 @@ set nu
 
 colorscheme sand
 
+autocmd BufRead /home/monk/notes/*  set ft=viki
+
 " save/restore fold
 "au BufWinLeave * mkview
 "au BufWinEnter * silent loadview
 
 set foldcolumn=4
+let g:vikiNameSuffix='.txt'
+
+set guifont=Liberation\ Mono\ 11
