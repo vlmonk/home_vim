@@ -30,13 +30,14 @@ set nu
 
 colorscheme sand
 
-autocmd BufRead /home/monk/notes/*  set ft=viki
-
-" save/restore fold
-"au BufWinLeave * mkview
-"au BufWinEnter * silent loadview
+autocmd BufRead /home/monk/crypto/notes/*  set ft=viki
 
 set foldcolumn=4
 let g:vikiNameSuffix='.txt'
 
 set guifont=Liberation\ Mono\ 11
+map \r :RunSpec<CR>
+nmap \t :!touch tmp/restart.txt<CR><CR>:!rm log/*.log<CR><CR>
+
+imap jj <Esc>
+imap оо <Esc> 
