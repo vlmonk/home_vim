@@ -1,9 +1,2 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =7
-let g:netrw_dirhist_1='/home/monk/project/ussur-info/spec/controllers/admin'
-let g:netrw_dirhist_2='/home/monk/project/ussur-info/spec/controllers'
-let g:netrw_dirhist_3='/home/monk/project/ussur-info/spec'
-let g:netrw_dirhist_4='/home/monk/project/ussur-info/spec/helpers'
-let g:netrw_dirhist_5='/home/monk/project/ussur-info/spec/helpers/admin'
-let g:netrw_dirhist_6='/home/monk/project/ussur-info/app/views/shared'
-let g:netrw_dirhist_7='/home/monk/project/fishnews/public/images'
+let g:netrw_dirhist_cnt =0
