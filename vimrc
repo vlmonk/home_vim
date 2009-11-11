@@ -7,6 +7,7 @@ set shiftwidth=2
 set expandtab
 set incsearch
 set guioptions=-T
+set smartcase
 "remove toolbar 
 set tb=
 filetype plugin on
