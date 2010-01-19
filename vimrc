@@ -21,6 +21,9 @@ autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 "autocmd BufNewFile,BufRead *.rb,*.rhtml source ~/.vim/scripts/rubysnippets.vim
 
+autocmd FileType python set softtabstop=4
+autocmd FileType python set shiftwidth=4
+
 let SVNCommandEdit='edit'
 
 
@@ -42,3 +45,5 @@ nmap \t :!touch tmp/restart.txt<CR><CR>:!rm log/*.log<CR><CR>
 
 imap jj <Esc>
 imap оо <Esc> 
+
+nnoremap <silent> <F12> :NERDTreeToggle /home/monk/project<cr>
