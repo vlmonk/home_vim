@@ -73,7 +73,7 @@ function! s:RunSpecMain(type)
 	if a:type=="file"
 		if match(l:bufn,'_spec.rb')>=0
 			call s:notice_msg("Running spec on the current file with ".l:type." ...")
-			let l:spec  = "spec -X -f h ".l:bufn
+			let l:spec  = "spec -f h ".l:bufn
 		else
 			call s:error_msg("Seems ".l:bufn." is not a *_spec.rb file")
 			return
@@ -118,6 +118,7 @@ function! s:RunSpecMain(type)
 	silent exec "r! ".s:cmd
 	setl syntax=vim-rspec
 	silent exec "nnoremap <buffer> <cr> :call <SID>TryToOpen()<cr>"
+        silent exec "nnoremap <buffer> q :q<CR>"
 	setl foldmethod=expr
 	setl foldexpr=getline(v:lnum)=~'^\+'
 	setl foldtext=\"+--\ \".string(v:foldend-v:foldstart+1).\"\ passed\ \"
