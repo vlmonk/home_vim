@@ -1,3 +1,6 @@
 view
 .netrwhist
 doc/tags
+*.so
+*.o
+mkmf.log

@@ -41,7 +41,7 @@ let g:vikiNameSuffix='.txt'
 
 set guifont=Liberation\ Mono\ 11
 map \r :RunSpec<CR>
-nmap \t :!touch tmp/restart.txt<CR><CR>:!rm log/*.log<CR><CR>
+nmap \y :!touch tmp/restart.txt<CR><CR>:!rm log/*.log<CR><CR>
 
 imap jj <Esc>
 imap оо <Esc> 

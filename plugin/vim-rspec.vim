@@ -112,13 +112,15 @@ function! s:RunSpecMain(type)
 	let s:cmd	= l:spec." | ".l:filter." 2> /dev/null | grep \"^[-\+\[\\#\\* ]\""
 	echo
 
+        echo s:cmd
+
 	" put the result on a new buffer
 	silent exec "new" 
 	setl buftype=nofile
 	silent exec "r! ".s:cmd
 	setl syntax=vim-rspec
 	silent exec "nnoremap <buffer> <cr> :call <SID>TryToOpen()<cr>"
-        silent exec "nnoremap <buffer> q :q<CR>"
+	silent exec "nnoremap <buffer> q :q<CR>"
 	setl foldmethod=expr
 	setl foldexpr=getline(v:lnum)=~'^\+'
 	setl foldtext=\"+--\ \".string(v:foldend-v:foldstart+1).\"\ passed\ \"
