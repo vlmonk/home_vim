@@ -6,7 +6,7 @@ set softtabstop=2
 set shiftwidth=2
 set expandtab
 set incsearch
-set guioptions=-T
+set guioptions=c
 set smartcase
 "remove toolbar 
 set tb=
