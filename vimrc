@@ -8,11 +8,14 @@ set expandtab
 set incsearch
 set guioptions=c
 set smartcase
-"remove toolbar 
-set tb=
+
 filetype plugin on
 filetype indent on
 
+
+set guioptions-=m  "remove menu bar
+set guioptions-=T  "remove toolbar
+set guioptions-=r  "remove right-hand scroll bar
 
 autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
