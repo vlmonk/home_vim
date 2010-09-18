@@ -1,25 +1,22 @@
-/*global JSLINT load readline print */
-
-load('fulljslint.js');
+<job>
+<script src="jslint-core.js" language="javascript"></script>
+<script language="javascript">
+/*global JSLINT load readline WScript */
 
 var readSTDIN = function() {
-    var line, 
-        input = [], 
+    var line,
+        input = [],
         emptyCount = 0,
         i;
 
-    line = readline();
-    while (emptyCount < 25) {
+    var stdIn = WScript.stdIn,
+        stdOut = WScript.stdOut;
+
+    while (!stdIn.atEndofStream) {
+        line = stdIn.readLine();
         input.push(line);
-        if (line) {
-            emptyCount = 0;
-        } else {
-            emptyCount += 1;
-        }
-        line = readline();
     }
 
-    input.splice(-emptyCount);
     return input.join("\n");
 };
 
@@ -34,8 +31,9 @@ if (!ok) {
     for (i = 0; i < errorCount; i += 1) {
         error = JSLINT.errors[i];
         if (error && error.reason && error.reason.match(/^Stopping/) === null) {
-            print([error.line, error.character, error.reason].join(":"));
+            WScript.echo([error.line, error.character, error.reason].join(":"));
         }
     }
 }
-
+</script>
+</job>
