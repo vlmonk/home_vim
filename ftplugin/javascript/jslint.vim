@@ -48,7 +48,7 @@ endif
 "noremap <buffer><silent> u u:JSLintUpdate<CR>
 "noremap <buffer><silent> <C-R> <C-R>:JSLintUpdate<CR>
 
-noremap <buffer><silent> <LocalLeader>j :JSLintUpdate<CR>
+noremap <buffer><silent> <LocalLeader>k :JSLintUpdate<CR>
 
 " Set up command and parameters
 if has("win32")
