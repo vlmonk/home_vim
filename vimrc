@@ -42,11 +42,11 @@ autocmd BufRead /home/monk/crypto/notes/*  set ft=viki
 set foldcolumn=4
 let g:vikiNameSuffix='.txt'
 
-set guifont=Liberation\ Mono\ 11
+"set guifont=Liberation\ Mono\ 11
+set guifont=Meslo\ LG\ L\ 11
 map \r :RunSpec<CR>
 nmap \y :!touch tmp/restart.txt<CR><CR>:!rm log/*.log<CR><CR>
 
 imap jj <Esc>
-imap оо <Esc> 
 
 nnoremap <silent> <F12> :NERDTreeToggle /home/monk/project<cr>
