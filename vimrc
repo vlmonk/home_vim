@@ -50,3 +50,5 @@ nmap \y :!touch tmp/restart.txt<CR><CR>:!rm log/*.log<CR><CR>
 imap jj <Esc>
 
 nnoremap <silent> <F12> :NERDTreeToggle /home/monk/project<cr>
+
+let g:syntastic_enable_signs=1
