@@ -34,7 +34,7 @@ following commands:
 
 |:Tail|          begin watching the specified file
 
-                                                *:Tail*
+                                                :Tail
 :Tail <filename>
         Begin watching the specified file in the preview window.  This will
         cause any existing preview windows to be closed.  If the file is
