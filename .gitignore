@@ -6,3 +6,4 @@ bundle/*/doc/tags
 *.o
 mkmf.log
 bundle/command-t/ruby/command-t/Makefile
+.VimballRecord
