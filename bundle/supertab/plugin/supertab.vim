@@ -2,7 +2,7 @@
 "   Original: Gergely Kontra <kgergely@mcl.hu>
 "   Current:  Eric Van Dewoestine <ervandew@gmail.com> (as of version 0.4)
 "   Please direct all correspondence to Eric.
-" Version: 1.1
+" Version: 1.2
 " GetLatestVimScripts: 1643 1 :AutoInstall: supertab.vim
 "
 " Description: {{{
@@ -84,6 +84,10 @@ set cpo&vim
 
   if !exists("g:SuperTabMidWordCompletion")
     let g:SuperTabMidWordCompletion = 1
+  endif
+
+  if !exists("g:SuperTabLeadingSpaceCompletion")
+    let g:SuperTabLeadingSpaceCompletion = 0
   endif
 
   if !exists("g:SuperTabMappingForward")
@@ -212,7 +216,7 @@ function! s:Init()
     autocmd FileType <buffer> call <SID>InitBuffer()
   augroup END
 
-  " Setup mechanism to restore orignial completion type upon leaving insert
+  " Setup mechanism to restore original completion type upon leaving insert
   " mode if configured to do so
   if g:SuperTabRetainCompletionDuration == 'insert'
     augroup supertab_retain
@@ -426,6 +430,14 @@ function! s:WillComplete()
     return 0
   endif
 
+  " Leading space.
+  if !g:SuperTabLeadingSpaceCompletion
+    let prev_char = strpart(line, cnum - 2, 1)
+    if prev_char =~ '^\s*$'
+      return 0
+    endif
+  endif
+
   " Within a word, but user does not have mid word completion enabled.
   let next_char = strpart(line, cnum - 1, 1)
   if !g:SuperTabMidWordCompletion && next_char =~ '\k'
@@ -460,6 +472,12 @@ endfunction " }}}
 function! s:CaptureKeyPresses()
   if !b:capturing
     let b:capturing = 1
+    " save any previous mappings
+    " TODO: capture additional info provided by vim 7.3.032 and up.
+    let b:captured = {
+        \ '<bs>': maparg('<bs>', 'i'),
+        \ '<c-h>': maparg('<c-h>', 'i'),
+      \ }
     " TODO: use &keyword to get an accurate list of chars to map
     for c in split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_', '.\zs')
       exec 'imap <buffer> ' . c . ' <c-r>=<SID>CompletionReset("' . c . '")<cr>'
@@ -477,9 +495,25 @@ function! s:ReleaseKeyPresses()
     for c in split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890_', '.\zs')
       exec 'iunmap <buffer> ' . c
     endfor
+
     iunmap <buffer> <bs>
     iunmap <buffer> <c-h>
     exec 'iunmap <buffer> ' . g:SuperTabMappingForward
+
+    " restore any previous mappings
+    for [key, rhs] in items(b:captured)
+      if rhs != ''
+        let args = substitute(rhs, '.*\(".\{-}"\).*', '\1', '')
+        if args != rhs
+          let args = substitute(args, '<', '<lt>', 'g')
+          let expr = substitute(rhs, '\(.*\)".\{-}"\(.*\)', '\1%s\2', '')
+          let rhs = printf(expr, args)
+        endif
+        exec printf("imap <silent> %s %s", key, rhs)
+      endif
+    endfor
+    unlet b:captured
+
     if mode() == 'i'
       " force full exit from completion mode (don't exit insert mode since
       " that will break repeating with '.')
@@ -591,11 +625,28 @@ endfunction " }}}
   inoremap <c-p> <c-r>=<SID>SuperTab('p')<cr>
 
   if g:SuperTabCrMapping
-    " using a <c-r> mapping instead of <expr>, seems to prevent evaluating
-    " other functions mapped to <cr> etc. (like endwise.vim)
-    inoremap <cr> <c-r>=<SID>SelectCompletion()<cr>
-    function s:SelectCompletion()
-      return pumvisible() ? "\<space>\<bs>" : "\<cr>"
+    if maparg('<CR>','i') =~ '<CR>'
+      exec "inoremap <script> <cr> " . maparg('<cr>', 'i') . "<c-r>=<SID>SelectCompletion(0)<cr>"
+    else
+      inoremap <cr> <c-r>=<SID>SelectCompletion(1)<cr>
+    endif
+    function! s:SelectCompletion(cr)
+      " selecting a completion
+      if pumvisible()
+        return "\<space>\<bs>"
+      endif
+
+      " not so pleasant hack to keep <cr> working for abbreviations
+      let word = substitute(getline('.'), '^.*\s\+\(.*\%' . col('.') . 'c\).*', '\1', '')
+      if maparg(word, 'i', 1) != ''
+        call feedkeys("\<c-]>", 't')
+        call feedkeys("\<cr>", 'n')
+        return ''
+      endif
+
+      " only return a cr if nothing else is mapped to it since we don't want
+      " to duplicate a cr returned by another mapping.
+      return a:cr ? "\<cr>" : ""
     endfunction
   endif
 " }}}
