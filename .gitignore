@@ -4,4 +4,4 @@ doc/tags
 *.so
 *.o
 mkmf.log
-ruby/command-t/Makefile
+bundle/command-t/ruby/command-t/Makefile
