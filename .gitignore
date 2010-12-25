@@ -1,6 +1,7 @@
 view
 .netrwhist
 doc/tags
+bundle/*/doc/tags
 *.so
 *.o
 mkmf.log
