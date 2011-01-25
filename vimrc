@@ -10,7 +10,6 @@ set incsearch
 set guioptions=c
 set ignorecase
 set smartcase
-set hidden
 set nobackup
 set noswapfile
 set hlsearch
@@ -31,7 +30,6 @@ autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 
 autocmd FileType python set softtabstop=4
 autocmd FileType python set shiftwidth=4
-
 " pathogen
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
@@ -91,3 +89,9 @@ imap jj <Esc>
 "nnoremap <silent> <F12> :NERDTreeToggle /home/monk/project<cr>
 
 let g:syntastic_enable_signs=1
+
+" command-t hooks
+nmap <silent> <leader>T :CommandTFlus<CR>:CommandT<CR>
+
+" command-t ignore list
+set wildignore+=tmp/sass-cache/**
