@@ -92,6 +92,7 @@ let g:syntastic_enable_signs=1
 
 " command-t hooks
 nmap <silent> <leader>T :CommandTFlus<CR>:CommandT<CR>
+nmap <silent> <leader>t :CommandT<CR>
 
 " command-t ignore list
 set wildignore+=tmp/sass-cache/**
