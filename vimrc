@@ -94,5 +94,10 @@ let g:syntastic_enable_signs=1
 nmap <silent> <leader>T :CommandTFlus<CR>:CommandT<CR>
 nmap <silent> <leader>t :CommandT<CR>
 
+" rails-rspec
+nmap <silent> <leader>r :RunSpec<CR>
+
 " command-t ignore list
-set wildignore+=tmp/sass-cache/**
+set wildignore+=tmp/**
+
+let g:RspecBin='rspec'
