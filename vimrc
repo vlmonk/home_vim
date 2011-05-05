@@ -1,4 +1,30 @@
 set nocp
+
+" vundle setup
+filetype off
+
+set rtp+=~/.vim/vundle.git/
+call vundle#rc()
+
+" github repos
+Bundle 'mattn/gist-vim'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-haml'
+Bundle 'tpope/vim-rails'
+Bundle 'tpope/vim-surround'
+Bundle 'taq/vim-rspec'
+Bundle 'scrooloose/syntastic'
+
+" vim-scripts repos
+Bundle 'supertab'
+" other repos
+Bundle 'git://git.wincent.com/command-t.git'
+
+
+filetype plugin indent on
+" vundle done
+
 set si
 syntax enable
 set nowrap
@@ -22,14 +48,10 @@ set guioptions-=m  "remove menu bar
 set guioptions-=T  "remove toolbar
 set guioptions-=r  "remove right-hand scroll bar
 
-autocmd FileType ruby,eruby set omnifunc=rubycomplete#Complete
-autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
-autocmd FileType ruby,eruby let g:rails_abbreviations = 0
-autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 
 autocmd FileType python set softtabstop=4
 autocmd FileType python set shiftwidth=4
+
 " pathogen
 call pathogen#helptags()
 call pathogen#runtime_append_all_bundles()
