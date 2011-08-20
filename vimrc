@@ -15,12 +15,10 @@ Bundle 'tpope/vim-rails'
 Bundle 'tpope/vim-surround'
 Bundle 'taq/vim-rspec'
 Bundle 'scrooloose/syntastic'
+Bundle 'ervandew/supertab'
 
-" vim-scripts repos
-Bundle 'supertab'
 " other repos
 Bundle 'git://git.wincent.com/command-t.git'
-
 
 filetype plugin indent on
 " vundle done
@@ -102,7 +100,8 @@ set foldcolumn=4
 let g:vikiNameSuffix='.txt'
 
 "set guifont=Liberation\ Mono\ 11
-set guifont=Meslo\ LG\ L\ 11
+"set guifont=Meslo\ LG\ L\ 11
+set guifont=Inconsolata\ 13
 map \r :RunSpec<CR>
 nmap \y :!touch tmp/restart.txt<CR><CR>:!rm log/*.log<CR><CR>
 
@@ -123,3 +122,6 @@ nmap <silent> <leader>r :RunSpec<CR>
 set wildignore+=tmp/**
 
 let g:RspecBin='rspec'
+
+" more mappings
+nmap y8 "+y$

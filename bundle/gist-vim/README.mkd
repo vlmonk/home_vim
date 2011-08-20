@@ -12,7 +12,7 @@ Usage:
 
         :Gist
 
-- Post selected text to gist, using defualt privacy option.
+- Post selected text to gist, using default privacy option.
   This applies to all permutations listed below (except multi).
 
         :'<,'>Gist
@@ -26,17 +26,8 @@ Usage:
 
         :Gist -P
 
-- Post whole text to gist as public
-  This is only relevant if you've set gists to be private by default;
-  if you get an empty gist list, try ":Gist --abandon".
-
-        :Gist -P
-
-- Post whole text to gist as public.
-  This is only relevant if you've set gists to be private by default;
-  if you get an empty gist list, try ":Gist --abandon".
-
-        :Gist -P
+>  This is only relevant if you've set gists to be private by default;
+> if you get an empty gist list, try ":Gist --abandon".
 
 - Create a gist anonymously.
 
