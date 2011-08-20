@@ -92,11 +92,11 @@ let g:proj_flags="imstg"
 "enable line numbers
 set nu
 
-colorscheme sand
+colorscheme vylight
 
 autocmd BufRead /home/monk/crypto/notes/*  set ft=viki
 
-set foldcolumn=4
+set foldcolumn=0
 let g:vikiNameSuffix='.txt'
 
 "set guifont=Liberation\ Mono\ 11
