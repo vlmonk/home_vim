@@ -19,6 +19,7 @@ Bundle 'ervandew/supertab'
 
 " other repos
 Bundle 'git://git.wincent.com/command-t.git'
+Bundle 'git://github.com/kchmck/vim-coffee-script.git'
 
 filetype plugin indent on
 " vundle done
@@ -92,7 +93,7 @@ let g:proj_flags="imstg"
 "enable line numbers
 set nu
 
-colorscheme vylight
+colorscheme PapayaWhip
 
 autocmd BufRead /home/monk/crypto/notes/*  set ft=viki
 
