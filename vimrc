@@ -48,8 +48,8 @@ set guioptions-=T  "remove toolbar
 set guioptions-=r  "remove right-hand scroll bar
 
 
-autocmd FileType python set softtabstop=4
-autocmd FileType python set shiftwidth=4
+autocmd FileType python setl softtabstop=4
+autocmd FileType python setl shiftwidth=4
 
 " pathogen
 call pathogen#helptags()
