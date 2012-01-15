@@ -19,6 +19,7 @@ Bundle 'ervandew/supertab'
 Bundle 'michaeljsmith/vim-indent-object'
 Bundle 'kchmck/vim-coffee-script'
 Bundle 'sjl/threesome.vim'
+Bundle 'Lokaltog/vim-powerline'
 
 " other repos
 Bundle 'git://git.wincent.com/command-t.git'
@@ -102,9 +103,9 @@ autocmd BufRead /home/monk/crypto/notes/*  set ft=viki
 set foldcolumn=0
 let g:vikiNameSuffix='.txt'
 
-"set guifont=Liberation\ Mono\ 11
+set guifont=Liberation\ Mono\ 11
 "set guifont=Meslo\ LG\ L\ 11
-set guifont=Inconsolata\ 13
+"set guifont=Inconsolata\ 11
 map \r :RunSpec<CR>
 nmap \y :!touch tmp/restart.txt<CR><CR>:!rm log/*.log<CR><CR>
 
@@ -128,3 +129,7 @@ let g:RspecBin='rspec'
 
 " more mappings
 nmap y8 "+y$
+
+" Powerline config
+set laststatus=2
+let g:Powerline_symbols = 'unicode'
